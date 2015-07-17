@@ -105,14 +105,18 @@ class Encrypt
   def aes_encrypt(text)
     cipher = OpenSSL::Cipher::AES256.new('CBC')
     aes = cipher.encrypt
+    aes.padding = 0
     aes.key = aes_key
+    aes.iv = aes_key.first(16)
     aes.update(text) + aes.final
   end
 
   def aes_decrypt(text)
     cipher = OpenSSL::Cipher::AES256.new('CBC')
     aes = cipher.decrypt
+    aes.padding = 0
     aes.key = aes_key
+    aes.iv = aes_key.first(16)
     aes.update(text) + aes.final
   end
 
