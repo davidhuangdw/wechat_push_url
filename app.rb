@@ -84,13 +84,28 @@ class PushUrl < Sinatra::Base
   private
   def auto_reply(msg_hash)
     # return '' if msg_hash[:MsgType]=='event' && msg_hash[:Event]=='LOCATION'
+    # XmlResp.new.build(ToUserName: msg_hash[:FromUserName],
+    #                   FromUserName: msg_hash[:ToUserName],
+    #                   CreateTime: Time.now.to_i,
+    #                   MsgType: 'text',
+    #                   # MsgType: 'transfer_customer_service',
+    #                   Content: "Hello, your msg is:\n\n#{@body.gsub(']]>', ']] >')}\n"
+    # )
     XmlResp.new.build(ToUserName: msg_hash[:FromUserName],
                       FromUserName: msg_hash[:ToUserName],
                       CreateTime: Time.now.to_i,
-                      MsgType: 'text',
-                      # MsgType: 'transfer_customer_service',
-                      Content: "Hello, your msg is:\n\n#{@body.gsub(']]>', ']] >')}\n"
+                      MsgType: 'news',
+                      ArticleCount: 1,
+                      Articles:{
+                          item: {
+                              Title: 'auto',
+                              Description:  "Hello, your msg is:\n\n#{@body.gsub(']]>', ']] >')}\n",
+                              PicUrl: 'http://img0.yododo.com/files/photo/2010-06-03/0128FCCD521D3014FF80808128FA43AB.jpg/',
+                              Url: 'http://www.qq.com/'
+                          }
+                      }
     )
+
   end
 
   def signature(token, timestamp, nonce)
