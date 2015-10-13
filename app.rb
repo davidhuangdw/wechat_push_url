@@ -83,7 +83,7 @@ class PushUrl < Sinatra::Base
 
   private
   def auto_reply(msg_hash)
-    # return '' if msg[:MsgType]=='event' && msg[:Event]=='LOCATION'
+    # return '' if msg_hash[:MsgType]=='event' && msg_hash[:Event]=='LOCATION'
     XmlResp.new.build(ToUserName: msg_hash[:FromUserName],
                       FromUserName: msg_hash[:ToUserName],
                       CreateTime: Time.now.to_i,
